@@ -243,4 +243,31 @@ class EnhancedChatInterface {
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
     new EnhancedChatInterface();
+    // Mobile nav (hamburger) toggle
+    const hamburger = document.getElementById('hamburger');
+    const header = document.querySelector('header');
+    const mainNav = document.getElementById('mainNav');
+    if (hamburger && header && mainNav) {
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = header.classList.toggle('nav-open');
+            hamburger.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        // Close nav when clicking a link
+        mainNav.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                header.classList.remove('nav-open');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Close nav on outside click
+        document.addEventListener('click', (ev) => {
+            if (!header.contains(ev.target)) {
+                header.classList.remove('nav-open');
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
 });
