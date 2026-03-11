@@ -8,10 +8,8 @@ class EnhancedChatInterface {
         this.sendButton = document.getElementById('sendButton');
         this.chatToggle = document.getElementById('chatToggle');
         this.suggestionChips = document.getElementById('suggestionChips');
-        this.quickActionButtons = document.getElementById('quickActionButtons');
+        this.suggestionChips = document.getElementById('suggestionChips');
         this.suggestionsContent = document.getElementById('suggestionsContent');
-        this.toggleSuggestions = document.getElementById('toggleSuggestions');
-        this.suggestionsHeader = document.getElementById('suggestionsHeader');
         
     // Start minimized so the chat is hidden on page load until the user presses +
     this.isMinimized = true;
@@ -21,22 +19,18 @@ class EnhancedChatInterface {
     
     init() {
         this.setInitialTime();
-        this.loadQuickActions();
         this.loadSuggestions();
         this.bindEvents();
-        this.updateSuggestionsVisibility(); // Set initial state (collapsed)
         // Apply initial minimized state so the widget is hidden until user opens it
         if (this.isMinimized) {
             this.widget.classList.add('minimized');
             if (this.chatToggle) {
-                this.chatToggle.textContent = '+';
                 this.chatToggle.setAttribute('aria-expanded', 'false');
             }
         } else {
             // ensure expanded state matches UI
             this.widget.classList.remove('minimized');
             if (this.chatToggle) {
-                this.chatToggle.textContent = '−';
                 this.chatToggle.setAttribute('aria-expanded', 'true');
             }
             this.userInput && this.userInput.focus();
@@ -51,47 +45,28 @@ class EnhancedChatInterface {
         document.getElementById('initialTime').textContent = timeString;
     }
     
-    loadQuickActions() {
-        const quickActions = [
-            { label: "👋 Greet", question: "Hello!" },
-            { label: "📧 Contact", question: "How can I contact Jackson?" },
-            { label: "💼 Projects", question: "What projects has Jackson worked on?" },
-            { label: "🎓 Education", question: "Where does Jackson study?" },
-            { label: "🛠 Skills", question: "What programming languages does Jackson know?" },
-            { label: "🎯 Goals", question: "What are Jackson's goals?" },
-            { label: "🔬 Research", question: "What is Jackson's AI research about?" },
-            { label: "🙏 Thanks", question: "Thank you!" }
-        ];
-        
-        this.quickActionButtons.innerHTML = '';
-        
-        quickActions.forEach(action => {
-            const button = document.createElement('button');
-            button.className = 'quick-action-btn';
-            button.textContent = action.label;
-            button.addEventListener('click', () => {
-                this.userInput.value = action.question;
-                this.sendMessage();
-            });
-            this.quickActionButtons.appendChild(button);
-        });
-    }
+    // Removed loadQuickActions
     
     loadSuggestions() {
         const suggestions = portfolioAI.getSuggestions();
+        if (!suggestions || suggestions.length === 0) {
+            this.suggestionsContent.style.display = 'none';
+            return;
+        }
+        
+        this.suggestionsContent.style.display = 'block';
         this.suggestionChips.innerHTML = '';
         
         suggestions.forEach(suggestion => {
-            const chip = document.createElement('div');
-            chip.className = 'suggestion-chip';
-            chip.textContent = suggestion;
-            chip.addEventListener('click', () => {
-                this.userInput.value = suggestion;
-                this.sendMessage();
-                // Keep suggestions in their current state (don't auto-collapse)
-            });
-            this.suggestionChips.appendChild(chip);
-        });
+             const chip = document.createElement('div');
+             chip.className = 'suggestion-chip';
+             chip.textContent = suggestion;
+             chip.addEventListener('click', () => {
+                 this.userInput.value = suggestion;
+                 this.sendMessage();
+             });
+             this.suggestionChips.appendChild(chip);
+         });
     }
     
     toggleSuggestionsView() {
@@ -110,13 +85,7 @@ class EnhancedChatInterface {
     }
     
     updateSuggestionsVisibility() {
-        if (this.suggestionsExpanded) {
-            this.suggestionsContent.classList.add('expanded');
-            this.toggleSuggestions.innerHTML = '▲ Hide Suggestions';
-        } else {
-            this.suggestionsContent.classList.remove('expanded');
-            this.toggleSuggestions.innerHTML = '▼ Show Suggestions';
-        }
+        // Suggestions are now always visible and scrollable in modern layout
     }
     
     bindEvents() {
@@ -132,22 +101,10 @@ class EnhancedChatInterface {
             e.stopPropagation();
             this.toggleChat();
         });
-        
+
         this.widget.querySelector('.chat-header').addEventListener('click', (e) => {
             if (e.target !== this.chatToggle) {
                 this.toggleChat();
-            }
-        });
-        
-        // Toggle suggestions when header or button is clicked
-        this.toggleSuggestions.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleSuggestionsView();
-        });
-        
-        this.suggestionsHeader.addEventListener('click', (e) => {
-            if (e.target !== this.toggleSuggestions) {
-                this.toggleSuggestionsView();
             }
         });
         
@@ -163,22 +120,20 @@ class EnhancedChatInterface {
         this.addMessage(message, 'user');
         this.userInput.value = '';
         
-        // DON'T change suggestions state when sending message
-        // Keep suggestions in whatever state the user set them to
-        
         // Show typing indicator
         this.showTypingIndicator();
         
-        // Get AI response after short delay
+        // Simulate a short delay for the rule-based response
         setTimeout(() => {
-            this.hideTypingIndicator();
             const response = portfolioAI.getResponse(message);
+            this.hideTypingIndicator();
             this.addMessage(response, 'bot');
-            this.loadSuggestions(); // Refresh suggestions based on context
             
-            // DON'T auto-expand suggestions after bot response
-            // Let the user decide when to see suggestions
-        }, 1200);
+            // Auto-hide suggestions after bot responds
+            if (this.suggestionsContent) {
+                this.suggestionsContent.style.display = 'none';
+            }
+        }, 800);
     }
     
     addMessage(text, sender) {
@@ -228,13 +183,11 @@ class EnhancedChatInterface {
         this.isMinimized = !this.isMinimized;
         if (this.isMinimized) {
             this.widget.classList.add('minimized');
-            this.chatToggle.textContent = '+';
-            this.chatToggle.setAttribute('aria-expanded', 'false');
+            this.chatToggle && this.chatToggle.setAttribute('aria-expanded', 'false');
         } else {
             this.widget.classList.remove('minimized');
-            this.chatToggle.textContent = '−';
-            this.chatToggle.setAttribute('aria-expanded', 'true');
-            this.userInput.focus();
+            this.chatToggle && this.chatToggle.setAttribute('aria-expanded', 'true');
+            this.userInput && this.userInput.focus();
             this.scrollToBottom();
         }
     }
