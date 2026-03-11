@@ -5,8 +5,8 @@ class PortfolioAI {
             {
                 question: "who is jackson",
                 answers: [
-                    "Jackson is a Computer Science student at Kabale University and an AI/ML enthusiast focused on building intelligent systems.",
-                    "He's a tech enthusiast pursuing a degree in Computer Science with a deep passion for NLP and machine learning."
+                    "Jackson is a Computer Science student at Kabale University passionate about building innovative digital solutions in Software Development, AI, and FinTech.",
+                    "He is a developer and technology enthusiast who enjoys solving real-world problems through code and experimenting with new tech like AI assistants and trading automation."
                 ]
             },
             {
@@ -26,8 +26,8 @@ class PortfolioAI {
             {
                 question: "projects",
                 answers: [
-                    "Jackson has worked on several impressive projects: **THRESHO** (Web3 Wallet), **NUTRIAGENT** (AI Nutritionist), **DT DECO HUB**, **SEMESTER MARKS PORTAL**, and **CRIB HUNT**.",
-                    "His portfolio features **THRESHO**, **NUTRIAGENT**, **DT DECO HUB**, and systems for student academic tracking."
+                    "Jackson has worked on several impressive projects: **AXON** (AI Voice Assistant for Linux), **THRESHO** (Web3 Wallet), **NUTRIAGENT** (AI Nutritionist), **DT DECO HUB**, **SEMESTER MARKS PORTAL**, and **CRIB HUNT**.",
+                    "His portfolio features **AXON** (an AI voice assistant built in Python), **THRESHO**, **NUTRIAGENT**, **DT DECO HUB**, and systems for student academic tracking."
                 ]
             },
             {
