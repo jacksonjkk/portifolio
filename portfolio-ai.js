@@ -5,8 +5,8 @@ class PortfolioAI {
             {
                 question: "who is jackson",
                 answers: [
-                    "Jackson is a Computer Science student at Kabale University passionate about building innovative digital solutions in Software Development, AI, and FinTech.",
-                    "He is a developer and technology enthusiast who enjoys solving real-world problems through code and experimenting with new tech like AI assistants and trading automation."
+                    "Jackson is a Computer Science student at Kabale University and the founder of **Axon Labs**, a tech venture focusing on AI, Web3, and innovative software solutions.",
+                    "He is the lead developer at **Axon Labs**, dedicated to solving real-world problems through advanced technology and innovative coding."
                 ]
             },
             {
@@ -26,8 +26,8 @@ class PortfolioAI {
             {
                 question: "projects",
                 answers: [
-                    "Jackson has worked on several impressive projects: **AXON** (AI Voice Assistant for Linux), **THRESHO** (Web3 Wallet), **NUTRIAGENT** (AI Nutritionist), **DT DECO HUB**, **SEMESTER MARKS PORTAL**, and **CRIB HUNT**.",
-                    "His portfolio features **AXON** (an AI voice assistant built in Python), **THRESHO**, **NUTRIAGENT**, **DT DECO HUB**, and systems for student academic tracking."
+                    "Jackson has worked on several impressive projects: **EKIKA** (Bakiga Culture), **ZETU** (Marketplace), **EC** (Electoral Command), **AXON** (AI Voice Assistant for Linux), **THRESHO** (Web3 Wallet), **NUTRIAGENT** (AI Nutritionist), **DT DECO HUB**, **SEMESTER MARKS PORTAL**, and **CRIB HUNT**.",
+                    "His portfolio features **EC** (a secure voting system), **ZETU**, **EKIKA**, **AXON**, **THRESHO**, **NUTRIAGENT**, and more."
                 ]
             },
             {
@@ -49,6 +49,13 @@ class PortfolioAI {
                 answers: [
                     "Jackson focuses on developing high-performance AI models for architectural data and smart systems.",
                     "His research focus is on Natural Language Processing and making machine learning models more intuitive and efficient."
+                ]
+            },
+            {
+                question: "axon labs",
+                answers: [
+                    "**Axon Labs** is Jackson's technology venture dedicated to creating high-impact digital solutions, specializing in AI, Web3, and custom software development.",
+                    "Founded by Jackson, **Axon Labs** is the hub for innovative projects like AXON AI and the Electoral Command voting system."
                 ]
             }
         ];
